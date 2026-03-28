@@ -182,13 +182,16 @@ The vault is a starting point.
 
 If **The Novelist** helps your writing process, you can:
 
-- Leave a rating or review on Gumroad
-- Share it with other writers
-- Support the creator via donation links (listed inside the vault)
+- Leave a rating or review on Gumroad.
+- Share it with other writers.
+- Support me on [![Buy Me a Coffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-donate-yellow?logo=buymeacoffee)](https://buymeacoffee.com/sakalakis)
+[![Ko‑fi](https://img.shields.io/badge/Ko--fi-support-blue?logo=kofi)](https://ko-fi.com/sakalakis)
+  [![Gumroad](https://img.shields.io/badge/Gumroad-Download-orange?logo=gumroad)](https://sakalakis.gumroad.com/l/the-novelist-free-obsidian-vault).
 
 ---
 
 ## Download
+**Get The Novelist from the 'Releases' page on GitHub.**
 
-**Get The Novelist here:**  
+**Get The Novelist from Gumroad:**  
 https://sakalakis.gumroad.com/l/the-novelist-free-obsidian-vault
