@@ -1,0 +1,1145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Novelist - Documentation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #1a1a1a;
+            --bg-secondary: #2d2d2d;
+            --bg-tertiary: #3d3d3d;
+            --text-primary: #e0e0e0;
+            --text-secondary: #a0a0a0;
+            --accent: #7b61ff;
+            --accent-hover: #9381ff;
+            --border: #404040;
+            --code-bg: #2a2a2a;
+            --code-inline: #ff6b9d;
+            --code-text: #58d7e7;
+        }
+
+        body.light-mode {
+            --bg-primary: #ffffff;
+            --bg-secondary: #f5f5f5;
+            --bg-tertiary: #eeeeee;
+            --text-primary: #1a1a1a;
+            --text-secondary: #666666;
+            --accent: #6c5ce7;
+            --accent-hover: #765ae8;
+            --border: #e0e0e0;
+            --code-bg: #f0f0f0;
+            --code-inline: #d73a49;
+            --code-text: #0077aa;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            display: flex;
+        }
+
+        header {
+            background-color: var(--bg-secondary);
+            border-bottom: 1px solid var(--border);
+            padding: 2rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            width: 100%;
+        }
+
+        .header-content {
+            max-width: calc(100% - 280px);
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            color: var(--accent);
+        }
+
+        .header-subtitle {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .header-left {
+            flex: 1;
+        }
+
+        .theme-toggle {
+            background-color: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            color: var(--text-primary);
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .theme-toggle:hover {
+            background-color: var(--accent);
+            color: white;
+        }
+
+        sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 280px;
+            height: 100vh;
+            background-color: var(--bg-secondary);
+            border-right: 1px solid var(--border);
+            padding: 2rem 0;
+            overflow-y: auto;
+            z-index: 99;
+        }
+
+        .sidebar-title {
+            padding: 0 1.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--accent);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        sidebar ul {
+            list-style: none;
+        }
+
+        sidebar a {
+            display: block;
+            padding: 0.75rem 1.5rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            border-left: 3px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        sidebar a:hover, sidebar a.active {
+            color: var(--accent);
+            border-left-color: var(--accent);
+            background-color: var(--bg-tertiary);
+        }
+
+        main {
+            margin-left: 280px;
+            flex: 1;
+            min-height: 100vh;
+        }
+
+        .main-content {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        nav {
+            display: none;
+        }
+
+        nav ul {
+            list-style: none;
+            gap: 0;
+        }
+
+        nav a {
+            display: block;
+            padding: 0.75rem 1.5rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            border-bottom: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        nav a:hover, nav a.active {
+            color: var(--accent);
+            border-bottom-color: var(--accent);
+        }
+
+        section {
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        section:last-child {
+            border-bottom: none;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            color: var(--accent);
+            margin-bottom: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            color: var(--text-primary);
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        h4 {
+            font-size: 1.05rem;
+            color: var(--text-primary);
+            margin-top: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        p {
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        ul, ol {
+            margin-left: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        code {
+            background-color: var(--code-bg);
+            padding: 0.25rem 0.5rem;
+            border-radius: 3px;
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 0.9em;
+            color: var(--code-inline);
+        }
+
+        pre {
+            background-color: var(--code-bg);
+            padding: 1.5rem;
+            border-radius: 5px;
+            overflow-x: auto;
+            margin-bottom: 1rem;
+            border-left: 3px solid var(--accent);
+        }
+
+        pre code {
+            background-color: transparent;
+            padding: 0;
+            color: var(--code-text);
+        }
+
+        .step-box {
+            background-color: var(--bg-secondary);
+            border-left: 3px solid var(--accent);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-radius: 3px;
+        }
+
+        .step-number {
+            display: inline-block;
+            background-color: var(--accent);
+            color: white;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 32px;
+            font-weight: bold;
+            margin-right: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .tip-box {
+            background-color: rgba(123, 97, 255, 0.1);
+            border-left: 3px solid var(--accent);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 3px;
+        }
+
+        .tip-title {
+            color: var(--accent);
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .faq-item {
+            background-color: var(--bg-secondary);
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            border-radius: 3px;
+            border-left: 3px solid var(--accent);
+        }
+
+        .faq-question {
+            color: var(--accent);
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem 0;
+        }
+
+        .faq-question:hover {
+            color: var(--accent-hover);
+        }
+
+        .faq-toggle {
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.3s ease;
+        }
+
+        .faq-item.open .faq-toggle {
+            transform: rotate(180deg);
+        }
+
+        .faq-answer {
+            display: none;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border);
+            color: var(--text-primary);
+        }
+
+        .faq-item.open .faq-answer {
+            display: block;
+        }
+
+        .property-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 1rem;
+        }
+
+        .property-table th {
+            background-color: var(--bg-secondary);
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 2px solid var(--border);
+            color: var(--accent);
+        }
+
+        .property-table td {
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .property-table tr:hover {
+            background-color: rgba(123, 97, 255, 0.05);
+        }
+
+        .template-example {
+            background-color: var(--code-bg);
+            padding: 1.5rem;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+        }
+
+        button {
+            background-color: var(--accent);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: var(--accent-hover);
+        }
+
+        .breadcrumb {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+
+        .breadcrumb a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        .back-to-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background-color: var(--accent);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+            z-index: 98;
+        }
+
+        .back-to-top:hover {
+            background-color: var(--accent-hover);
+            transform: translateY(-3px);
+        }
+
+        .back-to-top.show {
+            display: flex;
+        }
+
+        @media (max-width: 768px) {
+            sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+                border-right: none;
+                border-bottom: 1px solid var(--border);
+                padding: 1rem 0;
+            }
+
+            main {
+                margin-left: 0;
+            }
+
+            .main-content {
+                padding: 1rem;
+            }
+
+            .header-content {
+                max-width: 100%;
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            header {
+                padding: 1rem 0;
+            }
+
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            h2 {
+                font-size: 1.4rem;
+            }
+
+            .theme-toggle {
+                align-self: flex-start;
+            }
+
+            sidebar ul {
+                display: flex;
+                flex-wrap: wrap;
+            }
+
+            sidebar a {
+                padding: 0.5rem 1rem;
+                border-left: none;
+                border-bottom: 2px solid transparent;
+            }
+
+            sidebar a:hover, sidebar a.active {
+                border-left: none;
+                border-bottom-color: var(--accent);
+            }
+        }
+    </style>
+</head>
+<body>
+    <sidebar>
+        <div class="sidebar-title">Documentation</div>
+        <ul>
+            <li><a href="#overview" class="nav-link">Overview</a></li>
+            <li><a href="#templates" class="nav-link">Templates</a></li>
+            <li><a href="#properties" class="nav-link">Properties</a></li>
+            <li><a href="#linking" class="nav-link">Linking</a></li>
+            <li><a href="#guides" class="nav-link">Guides</a></li>
+            <li><a href="#faq" class="nav-link">FAQ</a></li>
+        </ul>
+    </sidebar>
+
+    <main>
+        <header>
+            <div class="header-content">
+                <div class="header-left">
+                    <h1>The Novelist</h1>
+                    <p class="header-subtitle">Complete Documentation Guide</p>
+                </div>
+                <button class="theme-toggle" onclick="toggleTheme()">Light Mode</button>
+            </div>
+        </header>
+
+        <div class="main-content">
+        <section id="overview">
+            <h2>Welcome to The Novelist</h2>
+            <p>The Novelist is a free Obsidian vault designed to help you organize, write, and manage your novel project. This documentation will guide you through all the features, templates, and workflows available in this vault.</p>
+            <p>Found something missing? Send a message at <strong>info@panossakalakis.com</strong>.<br><br>Loved it? ❤️ Buy me a coffee by donating on <a href="https://sakalakis.gumroad.com/l/the-novelist-free-obsidian-vault" target="_blank" rel="nofollow noopener">Gumroad</a>, <a href="https://ko-fi.com/sakalakis" target="_blank" rel="nofollow noopener">Ko-Fi</a>, or <a href="https://buymeacoffee.com/sakalakis" target="_blank" rel="nofollow noopener">Buy Me A Coffee</a>.<br><i>Every donation helps more than you can possibly imagine.</i></p>
+            <h3>Vault Structure</h3>
+            <ul>
+                <li><strong>Chapters</strong> - Your story content and chapter management</li>
+                <li><strong>Characters</strong> - Character profiles organized by importance</li>
+                <li><strong>Locations</strong> - World-building and location details</li>
+                <li><strong>Notes</strong> - Ideas, plot points, and marketing planning</li>
+                <li><strong>Media</strong> - Images and visual references</li>
+                <li><strong>Extras</strong> - Templates, guides, and additional resources</li>
+            </ul>
+
+            <h3>Key Features</h3>
+            <ul>
+                <li>Fully customizable templates for characters and locations</li>
+                <li>Integrated writing goal tracking</li>
+                <li>Visual worldbuilding canvas</li>
+                <li>Character relationship management</li>
+                <li>Marketing and planning tools</li>
+            </ul>
+        </section>
+
+        <section id="templates">
+            <h2>Working with Templates</h2>
+
+            <h3>What are Templates?</h3>
+            <p>Templates are pre-built markdown files that provide a consistent structure for creating new entries. The Novelist includes templates for characters and locations. Each template contains predefined fields and sections to ensure consistency across your vault.</p>
+
+            <h3>How to Insert a New Template</h3>
+
+            <div class="step-box">
+                <span class="step-number">1</span>
+                <h4>Create a New File</h4>
+                <p>Navigate to the appropriate folder where you want to create your new entry:</p>
+                <ul>
+                    <li>For characters, go to <code>Characters > [Appropriate Category]</code></li>
+                    <li>For locations, go to <code>Locations</code> or create a subfolder if needed</li>
+                </ul>
+                <p>Create a new markdown file by right-clicking the folder and selecting "New note", or use Ctrl+N (Cmd+N on Mac).</p>
+            </div>
+
+            <div class="step-box">
+                <span class="step-number">2</span>
+                <h4>Click the Templater Icon</h4>
+                <p>Look for the Templater plugin icon in the left sidebar (it appears as a template symbol). Click it to open the template browser.</p>
+            </div>
+
+            <div class="step-box">
+                <span class="step-number">3</span>
+                <h4>Search for Templates</h4>
+                <p>Type "templates" in the search box. You will see both available templates:</p>
+                <ul>
+                    <li><strong>Character Template</strong> - Use for creating new character profiles</li>
+                    <li><strong>City Template</strong> - Use for creating new location or world entries</li>
+                </ul>
+            </div>
+
+            <div class="step-box">
+                <span class="step-number">4</span>
+                <h4>Select Your Template</h4>
+                <p>Click on the template you want to use. The template content will be automatically inserted into your new file.</p>
+            </div>
+
+            <div class="step-box">
+                <span class="step-number">5</span>
+                <h4>Customize Your Entry</h4>
+                <p>Fill in the frontmatter properties and content sections with your specific information. Replace all placeholder text with your actual data.</p>
+            </div>
+
+            <div class="tip-box">
+                <div class="tip-title">Tip: Quick Template Access</div>
+                <p>The Templater plugin icon in the left sidebar provides the fastest way to insert templates. You can also access it using a keyboard shortcut if configured in your Obsidian settings.</p>
+            </div>
+
+            <h3>Character Template Structure</h3>
+            <p>Here is what the Character Template includes:</p>
+            <div class="template-example">
+                <pre><code>---
+Name:
+Nickname / Alias:
+Gender:
+Role:
+Age:
+Family Members:
+Relationship:
+Occupation:
+---
+
+## Basic Information
+- Occupation
+- Locations
+- Style
+
+## Personality
+- Three to five words that describe them
+- Internal Motivation
+- External Motivation
+- Strengths
+- Flaws
+- Fears
+- Belief
+- Misbelief
+
+## Backstory
+### Basics
+- Formative Memories
+- Accomplishments
+- Failures
+- Secrets
+- Habits
+
+### Main Backstory
+[Your detailed backstory here]</code></pre>
+            </div>
+
+            <h3>City Template Structure</h3>
+            <p>Here is what the City Template includes:</p>
+            <div class="template-example">
+                <pre><code>---
+Location Name:
+Location Type:
+People:
+Atmosphere/Mood:
+Connections:
+---
+
+## Overview
+[Overview content]
+
+## Description
+[Description content]</code></pre>
+            </div>
+        </section>
+
+        <section id="properties">
+            <h2>Adding and Managing Properties</h2>
+
+            <h3>What are Properties?</h3>
+            <p>Properties (also called frontmatter) are metadata fields at the top of a file, enclosed in three dashes (---). They help organize and categorize your vault entries, making them searchable and sortable.</p>
+
+            <h3>How to Add New Properties</h3>
+
+            <div class="step-box">
+                <span class="step-number">1</span>
+                <h4>Open Your File</h4>
+                <p>Open any markdown file in your vault where you want to add new properties.</p>
+            </div>
+
+            <div class="step-box">
+                <span class="step-number">2</span>
+                <h4>Click the Add Property Button</h4>
+                <p>Look at the top of the file in the properties panel. You will see a "+ Add Property" button. Click it to create a new property.</p>
+            </div>
+
+            <div class="step-box">
+                <span class="step-number">3</span>
+                <h4>Name Your Property</h4>
+                <p>Type the name of your new property in the input field. For example, "Status", "Priority", or "Theme".</p>
+            </div>
+
+            <div class="step-box">
+                <span class="step-number">4</span>
+                <h4>Add the Value</h4>
+                <p>Click on the property to open its value field and enter the appropriate value for that property.</p>
+            </div>
+
+            <h3>How to Edit Properties</h3>
+
+            <div class="step-box">
+                <span class="step-number">1</span>
+                <h4>Open the File</h4>
+                <p>Open the file containing the property you want to edit.</p>
+            </div>
+
+            <div class="step-box">
+                <span class="step-number">2</span>
+                <h4>Click on the Property</h4>
+                <p>In the properties panel at the top of the file, click directly on the property value you want to change.</p>
+            </div>
+
+            <div class="step-box">
+                <span class="step-number">3</span>
+                <h4>Edit the Value</h4>
+                <p>The property will become editable. Change the value to what you need and press Enter to confirm.</p>
+            </div>
+
+            <h3>How to Remove Properties</h3>
+
+            <div class="step-box">
+                <span class="step-number">1</span>
+                <h4>Open the File</h4>
+                <p>Open the file containing the property you want to remove.</p>
+            </div>
+
+            <div class="step-box">
+                <span class="step-number">2</span>
+                <h4>Find the Property</h4>
+                <p>Locate the property in the properties panel at the top of the file.</p>
+            </div>
+
+            <div class="step-box">
+                <span class="step-number">3</span>
+                <h4>Delete the Property</h4>
+                <p>Click the X icon or delete button next to the property name to remove it from the file.</p>
+            </div>
+
+            <h3>Recommended Properties by Type</h3>
+
+            <h4>Character Properties</h4>
+            <table class="property-table">
+                <tr>
+                    <th>Property</th>
+                    <th>Description</th>
+                    <th>Example Value</th>
+                </tr>
+                <tr>
+                    <td>Name</td>
+                    <td>Full name of the character</td>
+                    <td>Jason Chen</td>
+                </tr>
+                <tr>
+                    <td>Age</td>
+                    <td>Current age</td>
+                    <td>34</td>
+                </tr>
+                <tr>
+                    <td>Role</td>
+                    <td>Story role or archetype</td>
+                    <td>Protagonist</td>
+                </tr>
+                <tr>
+                    <td>Gender</td>
+                    <td>Character's gender</td>
+                    <td>Male</td>
+                </tr>
+                <tr>
+                    <td>Occupation</td>
+                    <td>Current job or profession</td>
+                    <td>Survivor</td>
+                </tr>
+                <tr>
+                    <td>Relationship</td>
+                    <td>Link to related characters</td>
+                    <td>[[Raven Martinez]]</td>
+                </tr>
+            </table>
+
+            <h4>Location Properties</h4>
+            <table class="property-table">
+                <tr>
+                    <th>Property</th>
+                    <th>Description</th>
+                    <th>Example Value</th>
+                </tr>
+                <tr>
+                    <td>Location Name</td>
+                    <td>Name of the location</td>
+                    <td>Ashenfall</td>
+                </tr>
+                <tr>
+                    <td>Location Type</td>
+                    <td>Type of location</td>
+                    <td>City</td>
+                </tr>
+                <tr>
+                    <td>People</td>
+                    <td>Population or population count</td>
+                    <td>456</td>
+                </tr>
+                <tr>
+                    <td>Atmosphere/Mood</td>
+                    <td>Emotional or environmental tone</td>
+                    <td>Destroyed long ago</td>
+                </tr>
+                <tr>
+                    <td>Connections</td>
+                    <td>Links to other locations</td>
+                    <td>[[Meridian Building]]</td>
+                </tr>
+            </table>
+
+            <div class="tip-box">
+                <div class="tip-title">Tip: Using Properties for Organization</div>
+                <p>Use properties consistently across similar files to enable sorting and filtering. For example, always set character roles the same way so you can easily filter for all "Protagonist" or "Supporting" characters.</p>
+            </div>
+        </section>
+
+        <section id="linking">
+            <h2>Linking Everything Together</h2>
+
+            <h3>Why Linking Matters</h3>
+            <p>Linking connects your notes together, creating a web of interconnected information. This helps you see relationships between characters, locations, and plot elements at a glance. The graph view will show all your connections visually.</p>
+
+            <h3>Creating Links in Obsidian</h3>
+
+            <div class="step-box">
+                <span class="step-number">1</span>
+                <h4>Type the Link Syntax</h4>
+                <p>To create a link to another note, use the syntax <code>[[Note Name]]</code>. Simply type the opening brackets, the name of the note you want to link to, and closing brackets.</p>
+                <p>Example: <code>[[Raven Martinez]]</code> creates a link to the Raven Martinez character file.</p>
+            </div>
+
+            <div class="step-box">
+                <span class="step-number">2</span>
+                <h4>Link to Existing Notes</h4>
+                <p>Start typing and Obsidian will show you a list of matching notes. Select the one you want to link to from the dropdown menu, or continue typing the full name and press Enter.</p>
+            </div>
+
+            <div class="step-box">
+                <span class="step-number">3</span>
+                <h4>Create Links While Creating New Notes</h4>
+                <p>You can also link to a note that doesn't exist yet by using the same syntax. Obsidian will create a link, and the note will appear as "unlinked" until you create it. When you eventually create the file, the link becomes active.</p>
+            </div>
+
+            <h3>Recommended Linking Practices</h3>
+
+            <h4>Link Characters to Locations</h4>
+            <p>In your character files, add a "Locations" property that lists the main locations where the character appears:</p>
+            <pre><code>Locations: [[Ashenfall]] · [[Meridian Building]] · [[Ashveil]]</code></pre>
+
+            <h4>Link Related Characters</h4>
+            <p>Create relationships between characters in their "Relationship" property:</p>
+            <pre><code>Relationship: [[Jason Chen]]
+Family Members: [[Kyle]]</code></pre>
+
+            <h4>Link Locations to Connected Locations</h4>
+            <p>In location files, add connected locations to show proximity or relationships:</p>
+            <pre><code>Connections: [[Ashenfall]] · [[Meridian Building]]</code></pre>
+
+            <h4>Link to Chapter Mentions</h4>
+            <p>When a character or location is mentioned in a chapter, create a link to that chapter in the character/location file. You can also do the reverse, linking from chapters to the characters/locations featured.</p>
+
+            <h3>Using the Graph View</h3>
+            <p>Open the graph view to see all your links visualized:</p>
+            <ol>
+                <li>Click the graph icon in the left sidebar, or press Ctrl+G (Cmd+G on Mac)</li>
+                <li>Hover over nodes to see which files they connect to</li>
+                <li>Click on a node to navigate to that file</li>
+                <li>Use the settings to filter by file type or connection strength</li>
+            </ol>
+
+            <div class="tip-box">
+                <div class="tip-title">Tip: Consistent Link Formatting</div>
+                <p>For links in properties, use the format <code>[[Note Name]]</code> without extra spaces. Separate multiple links with · or another delimiter for readability.</p>
+            </div>
+        </section>
+
+        <section id="guides">
+            <h2>Usage Guides</h2>
+
+            <h3>Creating Your First Character</h3>
+            <ol>
+                <li>Go to Templates and copy the Character Template</li>
+                <li>Navigate to <code>Characters</code> and then to the appropriate subfolder (Lead, Important, or Non-Important)</li>
+                <li>Create a new file with your character's name</li>
+                <li>Paste the template and fill in the frontmatter properties</li>
+                <li>Complete each section: Basic Information, Personality, and Backstory</li>
+                <li>Link this character to other characters and locations they interact with</li>
+                <li>Save the file</li>
+            </ol>
+
+            <h3>Creating Your First Location</h3>
+            <ol>
+                <li>Go to Templates and copy the City Template</li>
+                <li>Navigate to the <code>Locations</code> folder</li>
+                <li>Create a new subfolder for related locations if needed (e.g., create an "Ashenfall" folder for city districts)</li>
+                <li>Create a new file with your location's name</li>
+                <li>Paste the template and update the frontmatter with location details</li>
+                <li>Write the Overview and Description sections</li>
+                <li>Link to characters who live in or visit this location</li>
+                <li>Save the file</li>
+            </ol>
+
+            <h3>Organizing Chapters</h3>
+            <p>Chapters are stored in the <code>Chapters</code> folder. Use the <code>All Chapters.md</code> file as your table of contents:</p>
+            <ol>
+                <li>Create individual files for each chapter (Chapter 1.md, Chapter 2.md, etc.)</li>
+                <li>In <code>All Chapters.md</code>, maintain a master list of all chapters with links</li>
+                <li>Include a brief summary or important notes for each chapter</li>
+                <li>Link characters and locations featured in each chapter</li>
+            </ol>
+
+            <h3>Using the Worldbuilding Canvas</h3>
+            <p>The <code>Worldbuilding.canvas</code> file provides a visual layout of your world:</p>
+            <ol>
+                <li>Open the Worldbuilding.canvas file to see the visual layout</li>
+                <li>You can rearrange elements by drag and drop</li>
+                <li>Click on elements to jump directly to those notes</li>
+                <li>Add new elements by right-clicking on the canvas</li>
+                <li>This is useful for planning and seeing relationships at a glance</li>
+            </ol>
+
+            <h3>Tracking Writing Goals</h3>
+            <p>The Novelist includes writing goal tracking:</p>
+            <ol>
+                <li>Right-click on any folder or file in the Chapters section</li>
+                <li>Select "Add writing goal"</li>
+                <li>Set your daily word count target</li>
+                <li>Track your progress in the left panel</li>
+                <li>The system records your daily word count automatically</li>
+            </ol>
+
+            <h3>Managing Ideas and Plot Points</h3>
+            <p>Use the Notes folder to store creative ideas:</p>
+            <ul>
+                <li><strong>Ending Ideas.md</strong> - Brainstorm possible endings</li>
+                <li><strong>Plot Twist Ideas.md</strong> - Store unexpected turns and revelations</li>
+                <li><strong>Trilogy Ideas.md</strong> - Plan connections between multiple books</li>
+            </ul>
+            <p>Link these ideas to the relevant characters and locations they affect.</p>
+
+            <h3>Marketing and Planning</h3>
+            <p>In the <code>Notes > Marketing</code> folder, you'll find:</p>
+            <ul>
+                <li><strong>4 Phases Marketing Plan.md</strong> - A structured approach to marketing your book</li>
+                <li><strong>Build a Website.md</strong> - Guide for creating an author website</li>
+            </ul>
+
+            <h3>Customizing the Theme</h3>
+            <p>To match your personal style:</p>
+            <ol>
+                <li>Go to Obsidian Settings</li>
+                <li>Select "Appearance"</li>
+                <li>Choose your preferred theme (light, dark, etc.)</li>
+                <li>For advanced customization, go to Settings > Style Settings > AnuPpuccin</li>
+                <li>Adjust colors and typography to your preference</li>
+            </ol>
+
+            <h3>Syncing Your Vault</h3>
+            <p>To keep your vault updated across devices:</p>
+            <ol>
+                <li>Install Obsidian Sync or a third-party plugin (Remotely Save or Google Drive Sync)</li>
+                <li>Configure your preferred sync method in Obsidian settings</li>
+                <li>Enable auto-save if desired</li>
+                <li>Your vault will now sync automatically across your devices</li>
+            </ol>
+        </section>
+
+        <section id="faq">
+            <h2>Frequently Asked Questions</h2>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <span>How do I rename a file without breaking links?</span>
+                    <span class="faq-toggle">v</span>
+                </div>
+                <div class="faq-answer">
+                    <p>Obsidian automatically updates all linked references when you rename a file. Simply right-click the file, select "Rename", and update the filename. All links throughout your vault will be updated automatically.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <span>Can I add my own custom template?</span>
+                    <span class="faq-toggle">v</span>
+                </div>
+                <div class="faq-answer">
+                    <p>Yes. Create a new markdown file in the <code>Extras > Templates</code> folder with your custom structure. You can then use it the same way as the built-in templates. If you want to use Obsidian's template plugin for quick insertion, enable it in Settings and set the template folder location.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <span>How do I search across the entire vault?</span>
+                    <span class="faq-toggle">v</span>
+                </div>
+                <div class="faq-answer">
+                    <p>Use Ctrl+Shift+F (Cmd+Shift+F on Mac) to open the global search. Type the term you want to search for, and Obsidian will show all matching files and snippets of the text around the matches.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <span>Can I add images to my character/location files?</span>
+                    <span class="faq-toggle">v</span>
+                </div>
+                <div class="faq-answer">
+                    <p>Yes. The templates include placeholder text "Image goes here..." where you should add images. To add an image, place the image file in the <code>Media</code> folder, then use the syntax <code>![[Image Name.png]]</code> to embed it in your markdown. Replace the placeholder text with this syntax.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <span>What is the difference between internal and external links?</span>
+                    <span class="faq-toggle">v</span>
+                </div>
+                <div class="faq-answer">
+                    <p>Internal links (using [[Note Name]]) only work within your vault and link to other notes inside it. External links (using standard markdown [text](url)) link to websites or outside resources. The Novelist primarily uses internal links to connect your story elements.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <span>How do I see all files that link to a specific note?</span>
+                    <span class="faq-toggle">v</span>
+                </div>
+                <div class="faq-answer">
+                    <p>Open any note and look at the right sidebar. Under "Backlinks", you'll see all other notes that link to the current file. This is useful for tracking how many characters interact with a location or how many times a plot point is referenced.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <span>Can I export my vault for publishing?</span>
+                    <span class="faq-toggle">v</span>
+                </div>
+                <div class="faq-answer">
+                    <p>Obsidian can export files to various formats. Use the export feature in Obsidian, or install the Vellum app (mentioned in the instructions) to format your book for publication. You can export individual chapters as markdown or PDF and import them into professional publishing software.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <span>How do I track character arcs across chapters?</span>
+                    <span class="faq-toggle">v</span>
+                </div>
+                <div class="faq-answer">
+                    <p>In each character file, use the "Locations" property to list chapters where they appear. You can also create a section in the chapter file listing which characters appear. Link these references together. The graph view can then show you a visual representation of character presence across chapters.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <span>What should I do if I accidentally delete a file?</span>
+                    <span class="faq-toggle">v</span>
+                </div>
+                <div class="faq-answer">
+                    <p>Deleted files are moved to the system trash. Go to your computer's trash/recycle bin and restore the file from there. If you're using Obsidian Sync or another syncing service, check the sync provider's trash or recovery options.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <span>Can I create nested subfolders for better organization?</span>
+                    <span class="faq-toggle">v</span>
+                </div>
+                <div class="faq-answer">
+                    <p>Yes. You can create folders and subfolders to any depth. For example, create <code>Locations > Ashenfall > Districts</code> or <code>Characters > Antagonists > Royal Family</code>. References still work as long as the filename is unique, but deep nesting can make navigation more complex.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <span>How do I use the Worldbuilding canvas effectively?</span>
+                    <span class="faq-toggle">v</span>
+                </div>
+                <div class="faq-answer">
+                    <p>Open the Worldbuilding.canvas file to see your world organized visually. You can drag elements around to arrange them logically. Links show relationships between elements at a glance. Use this for planning story structure, character relationships, and location layout before diving into detailed writing.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <span>What is the best way to organize character backstories?</span>
+                    <span class="faq-toggle">v</span>
+                </div>
+                <div class="faq-answer">
+                    <p>The Character Template includes a Backstory section with subsections for Basics and Main Backstory. Use the Basics subsection for key facts and memories. Use the Main Backstory section for a narrative account of their life before the story begins. This is the approach used in the example character files.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <span>How often should I save my vault?</span>
+                    <span class="faq-toggle">v</span>
+                </div>
+                <div class="faq-answer">
+                    <p>Obsidian auto-saves files immediately as you type. If you have syncing enabled, changes sync automatically. You don't need to manually save. However, if you're using external sync services, make sure they're configured correctly so your data stays backed up across devices.</p>
+                </div>
+            </div>
+        </section>
+    </div>
+    </main>
+
+    <button class="back-to-top" onclick="scrollToTop()">↑</button>
+
+    <script>
+        const navLinks = document.querySelectorAll('.nav-link');
+        const sections = document.querySelectorAll('section');
+        const backToTopBtn = document.querySelector('.back-to-top');
+        const themeToggle = document.querySelector('.theme-toggle');
+        const html = document.documentElement;
+        const body = document.body;
+
+        const savedTheme = localStorage.getItem('theme') || 'dark';
+        if (savedTheme === 'light') {
+            body.classList.add('light-mode');
+            themeToggle.textContent = 'Dark Mode';
+        }
+
+        function toggleTheme() {
+            body.classList.toggle('light-mode');
+            const isLight = body.classList.contains('light-mode');
+            localStorage.setItem('theme', isLight ? 'light' : 'dark');
+            themeToggle.textContent = isLight ? 'Dark Mode' : 'Light Mode';
+        }
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.forEach(l => l.classList.remove('active'));
+                link.classList.add('active');
+            });
+        });
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (scrollY >= sectionTop - 200) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                const activeLink = document.querySelector('a[href="#' + current + '"]');
+                if (activeLink) {
+                    activeLink.classList.add('active');
+                }
+            });
+
+            if (scrollY > 300) {
+                backToTopBtn.classList.add('show');
+            } else {
+                backToTopBtn.classList.remove('show');
+            }
+        });
+
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function toggleFAQ(element) {
+            const faqItem = element.closest('.faq-item');
+            faqItem.classList.toggle('open');
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                backToTopBtn.classList.remove('show');
+            }
+        });
+    </script>
+</body>
+</html>
